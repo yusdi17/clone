@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dym/Halaman/PublicChatPage.dart';
 import 'package:dym/Halaman/commentPage.dart';
 import 'package:dym/konstanta.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +56,11 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("Dyarimu"),
         automaticallyImplyLeading: false,
+        actions: [IconButton(onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PublicChatPage()));
+        }, icon: Icon(Icons.chat))],
       ),
       body: posts.isEmpty
           ? Center(child: CircularProgressIndicator())
@@ -104,20 +110,20 @@ class _HomeState extends State<Home> {
                                 likePost(int.parse(post['id']));
                               },
                               icon: Icon(Icons.thumb_up),
-                              label: Text('Like (${post['likes_count'] ?? 0})'),
+                              label: Text('Like'),
                             ),
                             ElevatedButton.icon(
                               onPressed: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => CommentPage(),
+                                    builder: (context) => CommentPage(postId: int.parse(post['id'])),
                                   ),
                                 );
                               },
                               icon: Icon(Icons.comment),
                               label: Text(
-                                  'Comment (${post['comments_count'] ?? 0})'),
+                                  'Comment'),
                             ),
                           ],
                         ),

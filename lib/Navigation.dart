@@ -18,7 +18,7 @@ class _NavigationState extends State<Navigation> {
     Home(),
     Search(),
     AddPage(),
-    listPage(),
+    ListPage(),
     HalamanProfile()
   ];
 
@@ -115,7 +115,7 @@ class _NavigationState extends State<Navigation> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = listPage();
+                        currentScreen = ListPage();
                         currentTab = 2;
                       });
                     },

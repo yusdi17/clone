@@ -1,5 +1,7 @@
+import 'package:dym/login_register/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+ 
 
 class MyApp extends StatelessWidget {
   @override
@@ -38,6 +40,44 @@ class _HalamanProfileState extends State<HalamanProfile> {
     });
   }
 
+  Future<void> _signOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); 
+    
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => Login()),
+      (Route<dynamic> route) => false,
+    );
+  }
+
+  void _confirmSignOut() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Konfirmasi Sign Out'),
+          content: Text('Apakah Anda yakin ingin keluar dari akun ini?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Batal'),
+              onPressed: () {
+                Navigator.of(context).pop(); 
+              },
+            ),
+            TextButton(
+              child: Text('Ya'),
+              onPressed: () {
+                Navigator.of(context).pop(); 
+                _signOut(); 
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +109,13 @@ class _HalamanProfileState extends State<HalamanProfile> {
               Text(
                 bio,
                 style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  _confirmSignOut(); 
+                },
+                child: Text('Sign Out'),
               ),
             ],
           ),
